@@ -1,0 +1,18 @@
+[
+  {
+    "id": "d18b63e5-2b0b-4bf6-a6f1-48aaf98771f1",
+    "email": "teacher@attendance.local",
+    "salt": "5bb5e9155712ec4913ac9b35bb3fba53",
+    "passwordHash": "6881c9b11a0c713d4e8005d7cda2ded5c11d52db2056a25b50e7b3977f25b2b9254e5513b7da0c2cd641c96543b96919d0b8322014ae6d431679a5f68b2eaa1a",
+    "role": "teacher",
+    "createdAt": "2026-10-14T15:24:30.379Z"
+  },
+  {
+    "id": "e017ccdb-dcd3-45d6-a7f0-cebfd81f319f",
+    "email": "student@attendance.local",
+    "salt": "921b8b94365576bd53c1d8b4313bce04",
+    "passwordHash": "5925639aec9f3fb8a21c6f153b0e013ea6637fd654bbd94a0477fd9fdeb0f054e1bd9da69a8d71cef410f597566d41d1fd72057896f6e8a50485fb07feb09105",
+    "role": "student",
+    "createdAt": "2026-10-14T15:24:30.426Z"
+  }
+]

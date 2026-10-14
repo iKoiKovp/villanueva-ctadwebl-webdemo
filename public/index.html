@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f5f0">
-  <title>Iko Mika | Async CRUD</title>
+  <title>Iko Mika | Class Attendance</title>
   <style>
     /* Theme */
     :root {
@@ -584,12 +584,293 @@
       animation: spin .75s linear infinite;
     }
 
+    .auth-shell {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 26px 36px 48px;
+    }
+
+    .auth-topbar {
+      padding-bottom: 25px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .auth-content {
+      width: min(100%, 420px);
+      margin: 82px auto 0;
+    }
+
+    .auth-content h1 {
+      font-size: 36px;
+    }
+
+    .auth-copy {
+      margin: 10px 0 22px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .auth-form .primary {
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .auth-error {
+      margin: 13px 0 0;
+      color: #a33c2c;
+      line-height: 1.4;
+    }
+
+    .auth-switch {
+      margin-top: 15px;
+      border: 0;
+      background: transparent;
+      color: var(--green);
+      padding: 5px 0;
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .account-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .role-label {
+      border-radius: 4px;
+      background: var(--green-light);
+      color: var(--green);
+      padding: 4px 7px;
+      font-size: 10px;
+      font-weight: 750;
+      text-transform: uppercase;
+    }
+
+    .intro-actions,
+    .attendance-controls {
+      display: flex;
+      align-items: end;
+      gap: 10px;
+    }
+
+    .date-field {
+      display: grid;
+      gap: 5px;
+    }
+
+    .date-field span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .date-field input,
+    .attendance-search input {
+      height: 39px;
+      border: 1px solid #dfe2db;
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--ink);
+      padding: 0 10px;
+    }
+
+    .attendance-area {
+      min-width: 0;
+    }
+
+    .attendance-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin: 28px 0 12px;
+    }
+
+    .attendance-toolbar h2 {
+      font: 500 22px Georgia, "Times New Roman", serif;
+    }
+
+    .attendance-search {
+      width: min(220px, 34vw);
+    }
+
+    .attendance-search input {
+      width: 100%;
+      font-size: 12px;
+    }
+
+    .attendance-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .attendance-table {
+      width: 100%;
+      min-width: 540px;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .attendance-table th,
+    .attendance-table td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .attendance-table th {
+      background: #fafbf8;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 750;
+      text-transform: uppercase;
+    }
+
+    .attendance-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .attendance-table td:first-child {
+      width: 54px;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .student-name {
+      font-weight: 680;
+    }
+
+    .status-select {
+      min-width: 130px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: white;
+      color: var(--ink);
+      padding: 0 8px;
+    }
+
+    .status-badge {
+      display: inline-block;
+      min-width: 86px;
+      border-radius: 4px;
+      background: var(--blue-light);
+      color: #45677e;
+      padding: 5px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .status-badge[data-status="Present"] {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .status-badge[data-status="Absent"] {
+      background: var(--orange-light);
+      color: #99502e;
+    }
+
+    .status-badge[data-status="Late"] {
+      background: #f8eee2;
+      color: #92613a;
+    }
+
+    .row-actions {
+      display: flex;
+      justify-content: end;
+      gap: 5px;
+    }
+
+    .row-action {
+      border: 1px solid transparent;
+      border-radius: 5px;
+      background: transparent;
+      color: #62685f;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .row-action:hover {
+      border-color: var(--line);
+      background: #fafbf8;
+    }
+
+    .row-action.delete:hover {
+      color: #b24838;
+    }
+
+    .attendance-empty {
+      padding: 42px 20px !important;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .student-dialog {
+      width: min(420px, calc(100vw - 28px));
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--surface);
+      color: var(--ink);
+      box-shadow: var(--shadow);
+    }
+
+    .student-dialog::backdrop {
+      background: rgb(25 34 28 / 38%);
+    }
+
+    .student-dialog form {
+      padding: 22px;
+    }
+
+    .student-dialog h2 {
+      margin-bottom: 19px;
+      font: 500 22px Georgia, "Times New Roman", serif;
+    }
+
+    .dialog-actions {
+      display: flex;
+      justify-content: end;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .dialog-actions .primary {
+      flex: 0 0 auto;
+    }
+
+    .dialog-cancel {
+      min-height: 39px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: white;
+      color: var(--ink);
+      padding: 0 13px;
+    }
+
     [hidden] {
       display: none !important;
     }
 
     /* Responsive layout */
     @media (max-width: 760px) {
+      .auth-shell {
+        padding: 18px 18px 32px;
+      }
+
+      .auth-content {
+        margin-top: 55px;
+      }
+
       .shell {
         padding: 18px 18px 32px;
       }
@@ -617,6 +898,41 @@
     }
 
     @media (max-width: 470px) {
+      .auth-shell {
+        padding-right: 13px;
+        padding-left: 13px;
+      }
+
+      .header-actions {
+        align-items: end;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .account-label {
+        display: none;
+      }
+
+      .intro-actions {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .attendance-toolbar {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .attendance-controls,
+      .attendance-search {
+        width: 100%;
+      }
+
+      .attendance-controls {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
       .shell {
         padding-right: 13px;
         padding-left: 13px;
@@ -681,350 +997,354 @@
   </style>
 </head>
 <body>
-  <main class="shell">
+  <main class="auth-shell" id="authPanel">
+    <header class="auth-topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">I</span> Iko Mika</div>
+    </header>
+    <section class="auth-content" aria-labelledby="authTitle">
+      <p class="eyebrow">Private workspace</p>
+      <h1 id="authTitle">Sign in to the class sheet.</h1>
+      <p class="auth-copy" id="authCopy">Use your account to view the shared attendance register.</p>
+      <form class="form-panel auth-form" id="authForm">
+        <label class="field"><span class="field-label">Email</span><input id="authEmail" name="email" type="email" maxlength="254" autocomplete="email" required></label>
+        <label class="field"><span class="field-label">Password</span><input id="authPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" required></label>
+        <button class="primary" id="authSubmit" type="submit">Sign in</button>
+        <p class="auth-error" id="authError" role="alert" hidden></p>
+      </form>
+      <button class="auth-switch" id="authModeToggle" type="button">Create an account</button>
+    </section>
+  </main>
+
+  <main class="shell" id="appShell" hidden>
     <header class="topbar">
       <div class="brand"><span class="brand-mark" aria-hidden="true">I</span> Iko Mika</div>
-      <div class="api-state" id="apiState"><span class="api-dot" aria-hidden="true"></span><span id="apiLabel">Connecting to remote API</span></div>
+      <div class="header-actions">
+        <div class="api-state" id="apiState"><span class="api-dot" aria-hidden="true"></span><span id="apiLabel">Connecting to local API</span></div>
+        <span class="account-label" id="currentUserLabel"></span>
+        <span class="role-label" id="currentRoleLabel"></span>
+        <button class="refresh" id="logoutButton" type="button">Sign out</button>
+      </div>
     </header>
 
     <section class="intro" aria-labelledby="pageTitle">
       <div>
-        <p class="eyebrow">Your working list</p>
-        <h1 id="pageTitle">Make room for the next thing.</h1>
-        <p class="intro-copy">A little structure for everything on your mind.</p>
+        <p class="eyebrow">Class register</p>
+        <h1 id="pageTitle">Class attendance.</h1>
+        <p class="intro-copy">One shared register for the whole class.</p>
       </div>
-      <button class="refresh" id="refreshButton" type="button">↻ &nbsp;Refresh</button>
-    </section>
-    <p class="api-disclosure">Records are stored by a public demo API. Avoid entering private information.</p>
-
-    <section class="stats" aria-label="List summary">
-      <div class="stat"><span class="stat-label">All entries</span><strong class="stat-value" id="totalCount">0</strong></div>
-      <div class="stat"><span class="stat-label">In progress</span><strong class="stat-value" id="activeCount">0</strong></div>
-      <div class="stat"><span class="stat-label">Completed</span><strong class="stat-value" id="doneCount">0</strong></div>
-    </section>
-
-    <div class="workspace">
-      <form class="form-panel" id="recordForm">
-        <div class="form-heading"><h2 id="formTitle">Add an entry</h2><span class="edit-tag">Editing</span></div>
-        <label class="field"><span class="field-label">What needs doing?</span><input id="titleInput" name="title" maxlength="100" placeholder="e.g. Review the project outline" required></label>
-        <label class="field"><span class="field-label">Area</span><select id="categoryInput" name="category"><option>Personal</option><option>Work</option><option>Study</option></select></label>
-        <label class="field"><span class="field-label">Status</span><select id="statusInput" name="status"><option>Open</option><option>In progress</option><option>Done</option></select></label>
-        <label class="field"><span class="field-label">Due date</span><input id="dueDateInput" name="dueDate" type="date"></label>
-        <label class="field"><span class="field-label">Notes <span style="font-weight:400;color:var(--muted)">(optional)</span></span><textarea id="notesInput" name="notes" maxlength="500" placeholder="Add a detail to remember..."></textarea></label>
-        <div class="form-actions"><button class="primary" id="submitButton" type="submit">Add entry</button><button class="secondary" id="cancelButton" type="button">Cancel</button></div>
-      </form>
-
-      <section class="list-area" aria-label="Entries">
-        <div class="list-toolbar">
-          <div class="filters" role="group" aria-label="Filter entries">
-            <button class="filter" type="button" data-filter="All" aria-pressed="true">All</button>
-            <button class="filter" type="button" data-filter="Open" aria-pressed="false">Open</button>
-            <button class="filter" type="button" data-filter="In progress" aria-pressed="false">In progress</button>
-            <button class="filter" type="button" data-filter="Done" aria-pressed="false">Done</button>
-          </div>
-          <label class="search"><input id="searchInput" type="search" placeholder="Search entries" aria-label="Search entries"></label>
+        <div class="intro-actions">
+          <label class="date-field"><span>Attendance date</span><input id="attendanceDate" type="date" required></label>
+          <button class="refresh" id="refreshButton" type="button">↻ &nbsp;Refresh</button>
         </div>
-        <div class="record-list" id="recordList" aria-live="polite" aria-busy="false"></div>
+    </section>
+      <p class="api-disclosure">Daily roll call for the selected date.</p>
+
+      <section class="stats" aria-label="Attendance summary">
+        <div class="stat"><span class="stat-label">Students</span><strong class="stat-value" id="totalCount">0</strong></div>
+        <div class="stat"><span class="stat-label">Present</span><strong class="stat-value" id="presentCount">0</strong></div>
+        <div class="stat"><span class="stat-label">Unmarked</span><strong class="stat-value" id="unmarkedCount">0</strong></div>
+    </section>
+
+      <section class="attendance-area" aria-label="Class attendance sheet">
+        <div class="attendance-toolbar">
+          <h2>Student roster</h2>
+          <div class="attendance-controls">
+            <label class="attendance-search"><input id="searchInput" type="search" placeholder="Find a student" aria-label="Find a student"></label>
+            <button class="primary" id="addStudentButton" type="button" hidden>Add student</button>
+          </div>
+        </div>
+        <div class="attendance-table-wrap" aria-live="polite" aria-busy="false">
+          <table class="attendance-table">
+            <thead><tr><th scope="col">No.</th><th scope="col">Student</th><th scope="col">Attendance</th><th scope="col" id="actionsHeading">Actions</th></tr></thead>
+            <tbody id="attendanceRows"></tbody>
+          </table>
+        </div>
       </section>
-    </div>
   </main>
+    <dialog class="student-dialog" id="studentDialog" aria-labelledby="studentDialogTitle">
+      <form id="studentForm">
+        <h2 id="studentDialogTitle">Add student</h2>
+        <label class="field"><span class="field-label">Student name</span><input id="studentNameInput" name="name" maxlength="100" autocomplete="off" required></label>
+        <div class="dialog-actions"><button class="dialog-cancel" id="cancelStudentButton" type="button">Cancel</button><button class="primary" id="saveStudentButton" type="submit">Add student</button></div>
+      </form>
+    </dialog>
   <div class="notice" id="notice" role="status" hidden></div>
 
-  <script>
-    const apiUrl = 'https://api.restful-api.dev/objects';
-    const form = document.querySelector('#recordForm');
-    const recordList = document.querySelector('#recordList');
-    const submitButton = document.querySelector('#submitButton');
-    const refreshButton = document.querySelector('#refreshButton');
-    const notice = document.querySelector('#notice');
-    const apiState = document.querySelector('#apiState');
-    const apiLabel = document.querySelector('#apiLabel');
-    const filters = document.querySelector('.filters');
-    const knownIdsKey = 'daymark.remote-record-ids';
-    let records = [];
-    let activeFilter = 'All';
-    let editingId = null;
-    let noticeTimer;
+    <script>
+      const authPanel = document.querySelector('#authPanel');
+      const authForm = document.querySelector('#authForm');
+      const authError = document.querySelector('#authError');
+      const authSubmit = document.querySelector('#authSubmit');
+      const authPassword = document.querySelector('#authPassword');
+      const appShell = document.querySelector('#appShell');
+      const attendanceDate = document.querySelector('#attendanceDate');
+      const attendanceRows = document.querySelector('#attendanceRows');
+      const attendanceTable = document.querySelector('.attendance-table-wrap');
+      const studentDialog = document.querySelector('#studentDialog');
+      const studentForm = document.querySelector('#studentForm');
+      const studentNameInput = document.querySelector('#studentNameInput');
+      const saveStudentButton = document.querySelector('#saveStudentButton');
+      const notice = document.querySelector('#notice');
+      const apiState = document.querySelector('#apiState');
+      const apiLabel = document.querySelector('#apiLabel');
+      const refreshButton = document.querySelector('#refreshButton');
+      let students = [];
+      let currentUser = null;
+      let authMode = 'login';
+      let editingStudentId = null;
+      let noticeTimer;
 
-    async function request(path = '', options = {}) {
-      const response = await fetch(`${apiUrl}${path}`, {
-        ...options,
-        headers: { 'Content-Type': 'application/json', ...options.headers }
-      });
-      const text = await response.text();
-      let data = null;
-      try {
-        data = text ? JSON.parse(text) : null;
-      } catch {
-        data = { message: text.slice(0, 180) };
-      }
-      if (!response.ok) throw new Error(data?.message || data?.error || `Request failed (${response.status})`);
-      return data;
-    }
-
-    function toApiRecord(record) {
-      return {
-        name: 'Daymark entry',
-        data: {
-          app: 'daymark',
-          title: record.title,
-          category: record.category,
-          status: record.status,
-          dueDate: record.dueDate,
-          notes: record.notes
-        }
-      };
-    }
-
-    function fromApiRecord(record) {
-      return { id: record.id, ...record.data };
-    }
-
-    function knownRemoteIds() {
-      try {
-        const ids = JSON.parse(localStorage.getItem(knownIdsKey) || '[]');
-        return Array.isArray(ids) ? ids.map(String) : [];
-      } catch {
-        return [];
-      }
-    }
-
-    function rememberRemoteId(id) {
-      const ids = new Set(knownRemoteIds());
-      ids.add(String(id));
-      localStorage.setItem(knownIdsKey, JSON.stringify([...ids]));
-    }
-
-    function forgetRemoteId(id) {
-      const ids = knownRemoteIds().filter(knownId => knownId !== String(id));
-      localStorage.setItem(knownIdsKey, JSON.stringify(ids));
-    }
-
-    function showNotice(message, isError = false) {
-      clearTimeout(noticeTimer);
-      notice.textContent = message;
-      notice.classList.toggle('error', isError);
-      notice.classList.remove('loading');
-      notice.setAttribute('role', isError ? 'alert' : 'status');
-      notice.hidden = false;
-      noticeTimer = setTimeout(() => { notice.hidden = true; }, 3200);
-    }
-
-    function showLoadingNotice(message) {
-      clearTimeout(noticeTimer);
-      notice.textContent = message;
-      notice.classList.remove('error');
-      notice.classList.add('loading');
-      notice.setAttribute('role', 'status');
-      notice.hidden = false;
-    }
-
-    function setApiLoading(message) {
-      apiState.classList.remove('offline');
-      apiState.classList.add('loading');
-      apiLabel.textContent = message;
-    }
-
-    function setConnected(connected) {
-      apiState.classList.toggle('offline', !connected);
-      apiState.classList.remove('loading');
-      apiLabel.textContent = connected ? 'Remote API connected' : 'API connection lost';
-    }
-
-    function updateStats() {
-      document.querySelector('#totalCount').textContent = records.length;
-      document.querySelector('#activeCount').textContent = records.filter(record => record.status === 'In progress').length;
-      document.querySelector('#doneCount').textContent = records.filter(record => record.status === 'Done').length;
-    }
-
-    function escapeHtml(value) {
-      return String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
-    }
-
-    function render() {
-      updateStats();
-      const query = document.querySelector('#searchInput').value.trim().toLowerCase();
-      const visibleRecords = records.filter(record => {
-        const matchesFilter = activeFilter === 'All' || record.status === activeFilter;
-        const matchesSearch = `${record.title} ${record.category} ${record.notes}`.toLowerCase().includes(query);
-        return matchesFilter && matchesSearch;
-      });
-
-      if (!visibleRecords.length) {
-        const isEmpty = records.length === 0;
-        recordList.innerHTML = `<div class="empty"><span class="empty-mark" aria-hidden="true">${isEmpty ? '+' : '·'}</span><h3>${isEmpty ? 'A clear page.' : 'Nothing matches.'}</h3><p>${isEmpty ? 'Add an entry to get your list moving.' : 'Try another filter or search.'}</p></div>`;
-        return;
-      }
-
-      recordList.innerHTML = visibleRecords.map(record => {
-        const due = record.dueDate
-          ? `<span>Due ${new Date(`${record.dueDate}T00:00:00`).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>`
-          : '';
-        const notes = record.notes ? `<span>${escapeHtml(record.notes)}</span>` : '';
-        return `<article class="record" data-status="${escapeHtml(record.status)}">
-          <button class="status-toggle" type="button" data-action="advance" data-id="${escapeHtml(record.id)}" data-status="${escapeHtml(record.status)}" aria-label="Change status for ${escapeHtml(record.title)}" title="Change status">${record.status === 'Done' ? '✓' : ''}</button>
-          <div><h3 class="record-title">${escapeHtml(record.title)}</h3><div class="record-meta"><span class="category" data-category="${escapeHtml(record.category)}">${escapeHtml(record.category)}</span><span>${escapeHtml(record.status)}</span>${due}${notes}</div></div>
-          <div class="record-actions"><button class="record-action" type="button" data-action="edit" data-id="${escapeHtml(record.id)}">Edit</button><button class="record-action delete" type="button" data-action="delete" data-id="${escapeHtml(record.id)}">Delete</button></div>
-        </article>`;
-      }).join('');
-    }
-
-    async function loadRecords() {
-      recordList.setAttribute('aria-busy', 'true');
-      refreshButton.disabled = true;
-      refreshButton.textContent = 'Loading...';
-      setApiLoading('Loading records...');
-      if (!records.length) {
-        recordList.innerHTML = '<div class="loading-state" role="status"><span class="spinner" aria-hidden="true"></span><span>Loading entries...</span></div>';
-      }
-      try {
-        const remoteRecords = await request('?limit=100');
-        const collectionIds = new Set(remoteRecords.map(record => String(record.id)));
-        const linkedRecords = await Promise.all(knownRemoteIds()
-          .filter(id => !collectionIds.has(id))
-          .map(async id => {
-            try {
-              return await request(`/${encodeURIComponent(id)}`);
-            } catch {
-              forgetRemoteId(id);
-              return null;
-            }
-          }));
-        records = [...remoteRecords, ...linkedRecords.filter(Boolean)]
-          .filter(record => record.name === 'Daymark entry' && record.data?.app === 'daymark')
-          .map(fromApiRecord);
-        setConnected(true);
-        render();
-      } catch (error) {
-        setConnected(false);
-        showNotice(error.message, true);
-        if (!records.length) {
-          recordList.innerHTML = `<div class="empty"><span class="empty-mark" aria-hidden="true">!</span><h3>Could not load entries.</h3><p>${escapeHtml(error.message)}</p><button class="retry-button" type="button" data-action="retry">Try again</button></div>`;
-        }
-      } finally {
-        recordList.setAttribute('aria-busy', 'false');
-        refreshButton.disabled = false;
-        refreshButton.textContent = '↻  Refresh';
-      }
-    }
-
-    function resetForm() {
-      form.reset();
-      editingId = null;
-      form.classList.remove('is-editing');
-      document.querySelector('#formTitle').textContent = 'Add an entry';
-      submitButton.textContent = 'Add entry';
-    }
-
-    form.addEventListener('submit', async event => {
-      event.preventDefault();
-      const formData = new FormData(form);
-      const payload = {
-        title: formData.get('title').trim(),
-        category: formData.get('category'),
-        status: formData.get('status'),
-        dueDate: formData.get('dueDate'),
-        notes: formData.get('notes').trim()
-      };
-      const wasEditing = Boolean(editingId);
-      submitButton.disabled = true;
-      form.setAttribute('aria-busy', 'true');
-      submitButton.textContent = wasEditing ? 'Saving...' : 'Adding...';
-      showLoadingNotice(wasEditing ? 'Saving changes...' : 'Adding entry...');
-      try {
-        const savedResponse = await request(wasEditing ? `/${encodeURIComponent(editingId)}` : '', {
-          method: wasEditing ? 'PUT' : 'POST',
-          body: JSON.stringify(toApiRecord(payload))
+      async function request(path, options = {}) {
+        const response = await fetch(path, {
+          ...options,
+          headers: { 'Content-Type': 'application/json', ...options.headers }
         });
-        const savedRecord = fromApiRecord(savedResponse);
-        if (!wasEditing) rememberRemoteId(savedRecord.id);
-        resetForm();
-        records = wasEditing
-          ? records.map(record => record.id === savedRecord.id ? savedRecord : record)
-          : [savedRecord, ...records];
-        setConnected(true);
-        render();
-        showNotice(wasEditing ? 'Changes saved.' : 'Entry added.');
-      } catch (error) {
-        showNotice(error.message, true);
-      } finally {
-        form.setAttribute('aria-busy', 'false');
-        submitButton.disabled = false;
-        submitButton.textContent = editingId ? 'Save changes' : 'Add entry';
-      }
-    });
-
-    recordList.addEventListener('click', async event => {
-      const button = event.target.closest('button[data-action]');
-      if (!button) return;
-      if (button.dataset.action === 'retry') {
-        await loadRecords();
-        return;
-      }
-      const record = records.find(item => String(item.id) === button.dataset.id);
-      if (!record) return;
-
-      if (button.dataset.action === 'edit') {
-        editingId = record.id;
-        form.classList.add('is-editing');
-        document.querySelector('#formTitle').textContent = 'Edit entry';
-        submitButton.textContent = 'Save changes';
-        form.elements.title.value = record.title;
-        form.elements.category.value = record.category;
-        form.elements.status.value = record.status;
-        form.elements.dueDate.value = record.dueDate;
-        form.elements.notes.value = record.notes;
-        document.querySelector('#titleInput').focus();
-        form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        return;
-      }
-
-      if (button.dataset.action === 'delete' && !confirm(`Delete “${record.title}”?`)) return;
-      const originalButtonText = button.textContent;
-      button.disabled = true;
-      showLoadingNotice(button.dataset.action === 'delete' ? 'Deleting entry...' : 'Updating status...');
-      if (button.dataset.action === 'delete') button.textContent = 'Deleting...';
-      else button.textContent = '...';
-      try {
-        if (button.dataset.action === 'delete') {
-          await request(`/${encodeURIComponent(record.id)}`, { method: 'DELETE' });
-          forgetRemoteId(record.id);
-          if (editingId === record.id) resetForm();
-          records = records.filter(item => String(item.id) !== String(record.id));
-          showNotice('Entry deleted.');
-        } else {
-          const updatedResponse = await request(`/${encodeURIComponent(record.id)}`, {
-            method: 'PUT',
-            body: JSON.stringify(toApiRecord({
-              ...record,
-              status: record.status === 'Done' ? 'Open' : 'Done'
-            }))
-          });
-          const updatedRecord = fromApiRecord(updatedResponse);
-          records = records.map(item => String(item.id) === String(updatedRecord.id) ? updatedRecord : item);
-          showNotice(`Marked ${updatedRecord.status.toLowerCase()}.`);
+        const text = await response.text();
+        let data = null;
+        try {
+          data = text ? JSON.parse(text) : null;
+        } catch {
+          data = { message: text.slice(0, 180) };
         }
-        setConnected(true);
-        render();
-      } catch (error) {
-        button.disabled = false;
-        button.textContent = originalButtonText;
-        showNotice(error.message, true);
+        if (!response.ok) {
+          const error = new Error(data?.message || data?.error || `Request failed (${response.status})`);
+          error.status = response.status;
+          throw error;
+        }
+        return data;
       }
-    });
 
-    filters.addEventListener('click', event => {
-      const button = event.target.closest('button[data-filter]');
-      if (!button) return;
-      activeFilter = button.dataset.filter;
-      filters.querySelectorAll('button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-      render();
-    });
+      function localDateString() {
+        const today = new Date();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${today.getFullYear()}-${month}-${day}`;
+      }
 
-    document.querySelector('#searchInput').addEventListener('input', render);
-    document.querySelector('#refreshButton').addEventListener('click', loadRecords);
-    document.querySelector('#cancelButton').addEventListener('click', resetForm);
-    loadRecords();
-  </script>
+      function showAuth(message = '') {
+        currentUser = null;
+        students = [];
+        authPanel.hidden = false;
+        appShell.hidden = true;
+        authError.textContent = message;
+        authError.hidden = !message;
+      }
+
+      function setAuthMode(mode) {
+        authMode = mode;
+        const registering = mode === 'register';
+        document.querySelector('#authTitle').textContent = registering ? 'Join the class sheet.' : 'Sign in to the class sheet.';
+        document.querySelector('#authCopy').textContent = registering
+          ? 'The first account is the teacher. New accounts after that join as students.'
+          : 'Use your account to view the shared attendance register.';
+        authSubmit.textContent = registering ? 'Create account' : 'Sign in';
+        document.querySelector('#authModeToggle').textContent = registering ? 'Already have an account? Sign in' : 'Create an account';
+        authPassword.autocomplete = registering ? 'new-password' : 'current-password';
+        authError.hidden = true;
+      }
+
+      function applyUser(user) {
+        currentUser = user;
+        document.querySelector('#currentUserLabel').textContent = user.email;
+        document.querySelector('#currentRoleLabel').textContent = user.role;
+        document.querySelector('#addStudentButton').hidden = user.role !== 'teacher';
+        document.querySelector('#actionsHeading').hidden = user.role !== 'teacher';
+      }
+
+      function showNotice(message, isError = false) {
+        clearTimeout(noticeTimer);
+        notice.textContent = message;
+        notice.classList.toggle('error', isError);
+        notice.hidden = false;
+        noticeTimer = setTimeout(() => { notice.hidden = true; }, 3200);
+      }
+
+      function setConnected(connected, message = '') {
+        apiState.classList.toggle('offline', !connected);
+        apiState.classList.remove('loading');
+        apiLabel.textContent = connected ? 'Class sheet connected' : message || 'Connection lost';
+      }
+
+      function updateStats() {
+        document.querySelector('#totalCount').textContent = students.length;
+        document.querySelector('#presentCount').textContent = students.filter(student => student.status === 'Present').length;
+        document.querySelector('#unmarkedCount').textContent = students.filter(student => student.status === 'Unmarked').length;
+      }
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+      }
+
+      function render() {
+        updateStats();
+        const query = document.querySelector('#searchInput').value.trim().toLowerCase();
+        const visibleStudents = students.filter(student => student.name.toLowerCase().includes(query));
+        if (!visibleStudents.length) {
+          const message = students.length ? 'No students match that search.' : 'No students have been added to this class yet.';
+          attendanceRows.innerHTML = `<tr><td class="attendance-empty" colspan="4">${message}</td></tr>`;
+          return;
+        }
+
+        attendanceRows.innerHTML = visibleStudents.map((student, index) => {
+          const statusCell = currentUser.role === 'teacher'
+            ? `<select class="status-select" data-action="status" data-id="${escapeHtml(student.id)}" aria-label="Attendance for ${escapeHtml(student.name)}">${['Unmarked', 'Present', 'Absent', 'Late', 'Excused'].map(status => `<option${student.status === status ? ' selected' : ''}>${status}</option>`).join('')}</select>`
+            : `<span class="status-badge" data-status="${escapeHtml(student.status)}">${escapeHtml(student.status)}</span>`;
+          const actions = currentUser.role === 'teacher'
+            ? `<td><div class="row-actions"><button class="row-action" type="button" data-action="edit" data-id="${escapeHtml(student.id)}">Edit</button><button class="row-action delete" type="button" data-action="delete" data-id="${escapeHtml(student.id)}">Delete</button></div></td>`
+            : '';
+          return `<tr><td>${index + 1}</td><td><span class="student-name">${escapeHtml(student.name)}</span></td><td>${statusCell}</td>${actions}</tr>`;
+        }).join('');
+      }
+
+      async function loadAttendance() {
+        attendanceTable.setAttribute('aria-busy', 'true');
+        refreshButton.disabled = true;
+        refreshButton.textContent = 'Loading...';
+        try {
+          const date = encodeURIComponent(attendanceDate.value);
+          students = await request(`/api/attendance?date=${date}`);
+          setConnected(true);
+          render();
+        } catch (error) {
+          setConnected(false, error.message);
+          if (error.status === 401) {
+            showAuth();
+            return;
+          }
+          showNotice(error.message, true);
+        } finally {
+          attendanceTable.setAttribute('aria-busy', 'false');
+          refreshButton.disabled = false;
+          refreshButton.textContent = '↻  Refresh';
+        }
+      }
+
+      function openStudentDialog(student = null) {
+        editingStudentId = student?.id || null;
+        document.querySelector('#studentDialogTitle').textContent = student ? 'Edit student' : 'Add student';
+        saveStudentButton.textContent = student ? 'Save changes' : 'Add student';
+        studentNameInput.value = student?.name || '';
+        studentDialog.showModal();
+        studentNameInput.focus();
+      }
+
+      authForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        authError.hidden = true;
+        authSubmit.disabled = true;
+        authSubmit.textContent = authMode === 'register' ? 'Creating account...' : 'Signing in...';
+        const formData = new FormData(authForm);
+        try {
+          const user = await request(`/api/auth/${authMode === 'register' ? 'register' : 'login'}`, {
+            method: 'POST',
+            body: JSON.stringify({ email: formData.get('email'), password: formData.get('password') })
+          });
+          applyUser(user);
+          authPanel.hidden = true;
+          appShell.hidden = false;
+          authForm.reset();
+          await loadAttendance();
+        } catch (error) {
+          authError.textContent = error.message;
+          authError.hidden = false;
+        } finally {
+          authSubmit.disabled = false;
+          authSubmit.textContent = authMode === 'register' ? 'Create account' : 'Sign in';
+        }
+      });
+
+      document.querySelector('#authModeToggle').addEventListener('click', () => {
+        setAuthMode(authMode === 'login' ? 'register' : 'login');
+      });
+
+      document.querySelector('#logoutButton').addEventListener('click', async () => {
+        try {
+          await request('/api/auth/logout', { method: 'POST' });
+          showAuth();
+        } catch (error) {
+          showNotice(error.message, true);
+        }
+      });
+
+      document.querySelector('#addStudentButton').addEventListener('click', () => openStudentDialog());
+      document.querySelector('#cancelStudentButton').addEventListener('click', () => studentDialog.close());
+
+      studentForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        saveStudentButton.disabled = true;
+        const isEditing = Boolean(editingStudentId);
+        try {
+          await request(isEditing ? `/api/students/${encodeURIComponent(editingStudentId)}` : '/api/students', {
+            method: isEditing ? 'PUT' : 'POST',
+            body: JSON.stringify({ name: studentNameInput.value.trim() })
+          });
+          studentDialog.close();
+          studentForm.reset();
+          showNotice(isEditing ? 'Student updated.' : 'Student added.');
+          await loadAttendance();
+        } catch (error) {
+          showNotice(error.message, true);
+        } finally {
+          saveStudentButton.disabled = false;
+        }
+      });
+
+      attendanceRows.addEventListener('change', async event => {
+        const select = event.target.closest('select[data-action="status"]');
+        if (!select) return;
+        select.disabled = true;
+        try {
+          await request(`/api/students/${encodeURIComponent(select.dataset.id)}/attendance`, {
+            method: 'PUT',
+            body: JSON.stringify({ date: attendanceDate.value, status: select.value })
+          });
+          showNotice('Attendance updated.');
+          await loadAttendance();
+        } catch (error) {
+          showNotice(error.message, true);
+          await loadAttendance();
+        }
+      });
+
+      attendanceRows.addEventListener('click', async event => {
+        const button = event.target.closest('button[data-action]');
+        if (!button) return;
+        const student = students.find(item => item.id === button.dataset.id);
+        if (!student) return;
+        if (button.dataset.action === 'edit') {
+          openStudentDialog(student);
+          return;
+        }
+        if (!confirm(`Remove ${student.name} from this class roster? Their attendance history will also be deleted.`)) return;
+        button.disabled = true;
+        try {
+          await request(`/api/students/${encodeURIComponent(student.id)}`, { method: 'DELETE' });
+          showNotice('Student removed.');
+          await loadAttendance();
+        } catch (error) {
+          showNotice(error.message, true);
+          button.disabled = false;
+        }
+      });
+
+      document.querySelector('#searchInput').addEventListener('input', render);
+      document.querySelector('#attendanceDate').addEventListener('change', loadAttendance);
+      document.querySelector('#refreshButton').addEventListener('click', loadAttendance);
+
+      async function initializeAuth() {
+        attendanceDate.value = localDateString();
+        try {
+          const user = await request('/api/auth/me');
+          applyUser(user);
+          authPanel.hidden = true;
+          appShell.hidden = false;
+          await loadAttendance();
+        } catch (error) {
+          showAuth(error.status === 401 ? '' : error.message);
+        }
+      }
+
+      initializeAuth();
+    </script>
 </body>
 </html>

@@ -1,1 +1,65 @@
-[]
+[
+  {
+    "id": "0ca610f7-d0a8-43ea-8395-b6928b6b446b",
+    "name": "Mike Buzzyear",
+    "attendance": {
+      "2026-10-14": "Present"
+    },
+    "createdAt": "2026-10-14T15:26:42.427Z",
+    "updatedAt": "2026-10-14T15:41:59.904Z"
+  },
+  {
+    "id": "8a41a7da-589e-49e2-af47-2bcbfdf9a2bf",
+    "name": "Michael Jordan",
+    "attendance": {
+      "2026-10-14": "Present"
+    },
+    "createdAt": "2026-10-14T15:26:49.387Z",
+    "updatedAt": "2026-10-14T15:27:59.267Z"
+  },
+  {
+    "id": "e201bb2a-1d4d-4df1-ad0a-c88693a75539",
+    "name": "Iko Dani",
+    "attendance": {
+      "2026-10-14": "Absent"
+    },
+    "createdAt": "2026-10-14T15:26:57.109Z",
+    "updatedAt": "2026-10-14T15:28:00.627Z"
+  },
+  {
+    "id": "cc31ae2c-4496-410d-a1cd-556031b1539a",
+    "name": "RJ Villanueva",
+    "attendance": {
+      "2026-10-14": "Late"
+    },
+    "createdAt": "2026-10-14T15:27:02.403Z",
+    "updatedAt": "2026-10-14T15:28:01.615Z"
+  },
+  {
+    "id": "79ba8100-ffae-4956-a36a-85d143c6e955",
+    "name": "Kate Bridges",
+    "attendance": {
+      "2026-10-14": "Late"
+    },
+    "createdAt": "2026-10-14T15:27:41.673Z",
+    "updatedAt": "2026-10-14T15:28:04.856Z"
+  },
+  {
+    "id": "560c5e70-3ef7-4633-9fa6-c196694ae559",
+    "name": "Ariana Grande",
+    "attendance": {
+      "2026-10-14": "Excused"
+    },
+    "createdAt": "2026-10-14T15:27:54.044Z",
+    "updatedAt": "2026-10-14T15:28:05.989Z"
+  },
+  {
+    "id": "1e3ced64-47dd-43d2-9fa9-ecfc7a4676ee",
+    "name": "Ronald McDonald",
+    "attendance": {
+      "2026-10-14": "Excused"
+    },
+    "createdAt": "2026-10-14T15:42:50.947Z",
+    "updatedAt": "2026-10-14T15:43:08.151Z"
+  }
+]
